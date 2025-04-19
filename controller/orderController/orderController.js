@@ -2,27 +2,27 @@
 import Order from "../../models/Order.js";
 import User from "../../models/User.js";
 import Product from "../../models/Product.js";
+import Cart from "../../models/Cart.js";
 
-// CREATE ORDER
+// CREATE ORDER FROM CART
 export const createOrder = async (req, res) => {
   try {
-    const { items } = req.body;
-
-    if (!items || !Array.isArray(items) || items.length === 0) {
-      return res.status(400).json({ message: "No items provided" });
+    const cart = await Cart.findOne({ userId: req.user._id });
+    if (!cart || cart.items.length === 0) {
+      return res.status(400).json({ message: "Your cart is empty" });
     }
 // Fetch all products from DB and calculate total price
     let totalPrice = 0;
     const products = [];
 
-    for (const item of items) {
+    for (const item of cart.items) {
       const product = await Product.findById(item.productId);
       if (!product) {
         return res.status(404).json({ message: `Product not found: ${item.productId}` });
       }
 
-      const price = product.price * item.quantity;
-      totalPrice += price;
+      const itemTotal = product.price * item.quantity;
+      totalPrice += itemTotal;
 
       products.push({
         product: product._id,
@@ -40,18 +40,23 @@ export const createOrder = async (req, res) => {
       $push: { orders: newOrder._id },
     });
 
+    cart.items = [];
+    await cart.save();
+
     res.status(201).json(newOrder);
   } catch (error) {
+    console.error("Order Creation Error:", error);
     res.status(500).json({ message: "Failed to create order", error });
   }
 };
 
-// GET ORDERS FOR LOGGED IN USER
+// GET ORDERS FOR LOGGED-IN USER
 export const getUserOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id }).populate("products.product");
     res.status(200).json(orders);
   } catch (error) {
+    console.error("Get Orders Error:", error);
     res.status(500).json({ message: "Failed to get orders", error });
   }
 };
