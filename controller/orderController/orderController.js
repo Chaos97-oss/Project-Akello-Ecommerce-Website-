@@ -66,12 +66,21 @@ export const getUserOrders = async (req, res) => {
       const order = await Order.findById(req.params.orderId);
       if (!order) return res.status(404).json({ message: "Order not found" });
   
+      // Update the order status and save it
       order.status = status;
       await order.save();
   
-      res.status(200).json({ message: "Order status updated", order });
+      // Check if updatedAt is included in the response
+      res.status(200).json({
+        message: "Order status updated",
+        order: {
+          ...order.toObject(),
+          updatedAt: order.updatedAt, // Return the updatedAt field
+        },
+      });
     } catch (error) {
       console.error("Order Status Error:", error);
       res.status(500).json({ message: "Failed to update order", error });
     }
   };
+  
