@@ -26,6 +26,11 @@ const orderSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  status: {
+    type: String,
+    enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
+    default: "pending"
+  }
 });
 
 const Order = mongoose.model("Order", orderSchema);
