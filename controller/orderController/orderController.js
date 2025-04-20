@@ -58,5 +58,20 @@ export const getUserOrders = async (req, res) => {
   } catch (error) {
     console.error("Get Orders Error:", error);
     res.status(500).json({ message: "Failed to get orders", error });
-  }
-};
+  }};
+  //Update Order Status Admin Only//
+  export const updateOrderStatus = async (req, res) => {
+    const { status } = req.body;
+    try {
+      const order = await Order.findById(req.params.orderId);
+      if (!order) return res.status(404).json({ message: "Order not found" });
+  
+      order.status = status;
+      await order.save();
+  
+      res.status(200).json({ message: "Order status updated", order });
+    } catch (error) {
+      console.error("Order Status Error:", error);
+      res.status(500).json({ message: "Failed to update order", error });
+    }
+  };
