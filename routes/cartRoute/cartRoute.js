@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/add', protect, addItemToCart);//to make sure only authorized users can add to cart
 
 // Remove item from the cart
-router.delete('/remove', protect, removeItemFromCart);//to make sure only authorized users can remove from cart
+router.delete('/remove/:id', protect, removeItemFromCart);//to make sure only authorized users can remove from cart
 
 //  View cart
 router.get('/my-cart', protect, getUserCart); 
