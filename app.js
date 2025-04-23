@@ -26,7 +26,7 @@ app.use('/api/users', userRoute);
 app.use('/api/auth', authRoute);
 app.use('/api/cart', cartRoute);
 app.use('/api/products',productRoute);
-app.use("/api/orders", orderRoute);
+app.use('/api/orders', orderRoute);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
