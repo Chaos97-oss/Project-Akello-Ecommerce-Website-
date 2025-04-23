@@ -85,5 +85,6 @@ Bcrypt for password hashing
 
 ✍️ Author
 
-Crafted with ❤️ by [Chaos].
+Crafted with ❤️ by [Chaos](https://github.com/Chaos97-oss)
+
 
