@@ -7,6 +7,7 @@ import cartRoute from './routes/cartRoute/cartRoute.js';
 import productRoute from "./routes/productRoute/productRoute.js";
 import orderRoute from "./routes/orderRoute/orderRoute.js";
 import morgan from 'morgan';
+import cors from 'cors';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -20,6 +21,7 @@ const app = express();
 // Middleware to parse JSON data
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cors('*'))
 
 // Routes
 app.use('/api/users', userRoute);
