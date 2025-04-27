@@ -37,13 +37,22 @@ const userSchema = mongoose.Schema({
 		isAdmin: {
 			type: Boolean,
 			default: false         // If not provided, this defaults to false
-		}
+		},
+		passwordResetToken: String,
+		passwordResetTokenExpiry: Date,
 });
 
 // Add method to generate password reset token//
-UserSchema.methods.generatePasswordResetToken = function() {
+userSchema.methods.generatePasswordResetToken = function() {
   const resetToken = crypto.randomBytes(32).toString('hex');
-  this.passwordResetToken = resetToken;
+  
+	 // Hash the token and save it to the database
+	this.passwordResetToken = crypto
+	.createHash('sha256')
+	.update(resetToken)
+	.digest('hex')
+  
+	// Set the token expiry time
   this.passwordResetTokenExpiry = Date.now() + 3600000; // 1 hour expiry
   return resetToken;
 };
