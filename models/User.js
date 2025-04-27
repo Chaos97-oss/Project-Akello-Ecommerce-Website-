@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import crypto from "crypto";
 const userSchema = mongoose.Schema({
 	firstName: {
 		type: String,
@@ -39,6 +39,14 @@ const userSchema = mongoose.Schema({
 			default: false         // If not provided, this defaults to false
 		}
 });
+
+// Add method to generate password reset token//
+UserSchema.methods.generatePasswordResetToken = function() {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  this.passwordResetToken = resetToken;
+  this.passwordResetTokenExpiry = Date.now() + 3600000; // 1 hour expiry
+  return resetToken;
+};
 
 const User = mongoose.model("User", userSchema);
 
