@@ -12,10 +12,10 @@ const sendEmail = async (options) => {
 
   // Email options
   const mailOptions = {
-    from: 'Akello <noreply@Akello.com>', // You can change this
-    to: options.email,
+    from: `${process.env.EMAIL_FROM_NAME} <${process.env.EMAIL_USER}>`,
+    to: options.to,
     subject: options.subject,
-    text: options.message
+    html: options.html,
   };
 
   // Send email
