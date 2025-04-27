@@ -1,6 +1,8 @@
 import User from "../../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import sendEmail from "../../utils/sendEmail.js"; 
+
 
 const signUp = async (req, res) => {
 	try {
@@ -40,7 +42,15 @@ const signUp = async (req, res) => {
 			password: hashedPassword,
 			isAdmin: isAdmin || false
 		});
+		// Send Welcome Email
+		const welcomeMessage = `Welcome To PROJECT AKELLO!, ${newUser.firstName}! 🎉 
+		We're excited to have you on board. Feel free to explore and enjoy our services!`;
 
+		await sendEmail({
+  	email: newUser.email,
+  	subject: "Welcome to PROJECT AKELLO!",
+  	message: welcomeMessage
+});
 		// Generate a JWT token
 		const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
 			expiresIn: "30d",
