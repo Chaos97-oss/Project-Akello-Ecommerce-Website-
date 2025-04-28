@@ -2,6 +2,7 @@
 import login from '../../controller/authController/login.js';
 import signUp, {protect, isAdmin} from '../../controller/authController/signUp.js';
 import forgotPassword from '../../controller/authController/forgotPassword.js';
+import { sendOtp, verifyOtp } from '../../controller/authController/oTp.js';
 import express from 'express';
 
 
@@ -12,4 +13,6 @@ router.post('/signup', signUp);//for basic user sign up
 router.post('/admin/login',protect, isAdmin, signUp ) //Only logged-in admins (with valid JWT) can create an admin.
 router.post('/login', login);//login for every user 
 router.post('/forgot-password', forgotPassword)
+router.post('/send-otp', sendOtp);
+router.post('/verify-otp', verifyOtp);
 export default router;
