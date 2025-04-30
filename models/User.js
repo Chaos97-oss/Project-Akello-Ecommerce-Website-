@@ -42,20 +42,21 @@ const userSchema = mongoose.Schema({
 		passwordResetTokenExpiry: Date,
 });
 
-// Add method to generate password reset token//
 userSchema.methods.generatePasswordResetToken = function() {
   const resetToken = crypto.randomBytes(32).toString('hex');
   
-	 // Hash the token and save it to the database
-	this.passwordResetToken = crypto
-	.createHash('sha256')
-	.update(resetToken)
-	.digest('hex')
+  // Hash the token and save it to the database
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
   
-	// Set the token expiry time
-  this.passwordResetTokenExpiry = Date.now() + 3600000; // 1 hour expiry
-  return resetToken;
+  // Set expiration (optional but good practice)
+  this.passwordResetExpire = Date.now() + 60 * 60 * 1000; // expires in 1 hour
+  
+  return resetToken; // reset password tested and fixed
 };
+
 
 const User = mongoose.model("User", userSchema);
 

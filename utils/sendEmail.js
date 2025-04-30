@@ -1,7 +1,6 @@
 import nodemailer from 'nodemailer';
 
 const sendEmail = async (options) => {
-  // Create transporter (Gmail example)
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -10,15 +9,13 @@ const sendEmail = async (options) => {
     }
   });
 
-  // Email options
   const mailOptions = {
-    from: `${process.env.EMAIL_FROM_NAME} <${process.env.EMAIL_USER}>`,
+    from: `${process.env.EMAIL_FROM_NAME} <${process.env.EMAIL_USERNAME}>`, // fixed here
     to: options.to,
     subject: options.subject,
     html: options.html,
   };
 
-  // Send email
   await transporter.sendMail(mailOptions);
 };
 

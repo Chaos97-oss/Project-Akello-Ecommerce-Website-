@@ -1,5 +1,5 @@
 import User from "../../models/User.js";
-import sendEmail from "../../utils/sendEmail.js"; // Assuming you created this
+import sendEmail from "../../utils/sendEmail.js"; 
 import crypto from "crypto";
 
 const forgotPassword = async (req, res) => {
