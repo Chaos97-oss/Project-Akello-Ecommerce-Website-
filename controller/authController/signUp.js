@@ -41,20 +41,21 @@ const signUp = async (req, res) => {
 			email,
 			password: hashedPassword,
 			isAdmin: isAdmin || false
-		});
-		// Send Welcome Email
-		const welcomeMessage = `Welcome To PROJECT AKELLO!, ${newUser.firstName}! 🎉 
-		We're excited to have you on board. Feel free to explore and enjoy our services!`;
-
+		});		
+		
+		
+		//Send Welcome Email;
 		await sendEmail({
-  	email: newUser.email,
-  	subject: "Welcome to PROJECT AKELLO!",
-  	message: welcomeMessage
-});
+			to: newUser.email,
+			subject: "Welcome to PROJECT AKELLO!",
+			html: `<p>Welcome To <strong>PROJECT AKELLO</strong>, ${newUser.firstName}! 🎉<br/>
+						 We're excited to have you on board. Feel free to explore and enjoy our services!</p>`
+		});
 		// Generate a JWT token
 		const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
 			expiresIn: "30d",
-		});
+		});console.log(token);
+		
 
 		// Send the token and user data in the response
 
@@ -66,7 +67,7 @@ const signUp = async (req, res) => {
 				lastName: newUser.lastName,
 				email: newUser.email,
 			},
-		});
+		}); 			console.log(user);
 	} catch (error) {
 		console.error("Server Error:", error); // Log the full error object
 		res.status(500).json({ message: "Server Error" });
