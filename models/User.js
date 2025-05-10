@@ -38,6 +38,12 @@ const userSchema = mongoose.Schema({
 			type: Boolean,
 			default: false         // If not provided, this defaults to false
 		},
+		orderOtp: {
+			type: String,
+		},
+		orderOtpExpiry: {
+			type: Date,
+		},
 		orderOtpVerified: {
 			type: Boolean,
 			default: false,

@@ -7,6 +7,12 @@ import Cart from "../../models/Cart.js";
 // CREATE ORDER FROM CART
 export const createOrder = async (req, res) => {
   try {
+    // Check if OTP was verified before placing order
+    const user = await User.findById(req.user._id);
+    if (!user.orderOtpVerified) {
+      return res.status(403).json({ message: "Please verify your OTP before placing an order." });
+    }
+
     const cart = await Cart.findOne({ userId: req.user._id });
     if (!cart || cart.items.length === 0) {
       return res.status(400).json({ message: "Your cart is empty" });
@@ -35,6 +41,10 @@ export const createOrder = async (req, res) => {
       products,
       totalPrice,
     });
+    user.orderOtpVerified = false;
+    user.orderOtp = undefined;
+    user.orderOtpExpiry = undefined;
+await user.save();
 // Link to user
     await User.findByIdAndUpdate(req.user._id, {
       $push: { orders: newOrder._id },
