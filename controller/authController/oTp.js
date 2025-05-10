@@ -26,7 +26,15 @@ export const verifyOtp = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email });
   if (!user) return next(new AppError('User not found', 404));
 
-  if (user.otp !== otp || user.otpExpiry < Date.now()) {
+  console.log("Stored OTP:", user.otp);
+  console.log("Submitted OTP:", otp);
+  console.log("Expiry Time:", user.otpExpiry, "| Now:", new Date());
+
+  if (
+    !otp ||
+    String(user.otp) !== String(otp) ||
+    new Date(user.otpExpiry) < new Date()
+  ) {
     return next(new AppError('Invalid or expired OTP', 400));
   }
 
