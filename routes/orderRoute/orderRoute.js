@@ -9,6 +9,6 @@ router.get("/my-orders", protect, getUserOrders);
 router.post("/", protect, createOrder);
 router.put("/update-status/:orderId", protect, isAdmin, updateOrderStatus);
 router.delete("/:orderId", protect, isAdmin, deleteOrder);
-router.post("/orders/send-otp", sendOrderOtp)
-router.post("/orders/verify-otp", verifyOrderOtp)
+router.post("/send-otp", sendOrderOtp)
+router.post("/verify-otp", verifyOrderOtp)
 export default router;
