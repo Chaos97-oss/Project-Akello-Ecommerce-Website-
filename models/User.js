@@ -38,6 +38,10 @@ const userSchema = mongoose.Schema({
 			type: Boolean,
 			default: false         // If not provided, this defaults to false
 		},
+		orderOtpVerified: {
+			type: Boolean,
+			default: false,
+		},
 		passwordResetToken: String,
 		passwordResetTokenExpiry: Date,
 });
