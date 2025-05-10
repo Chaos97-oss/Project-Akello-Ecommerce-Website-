@@ -1,5 +1,4 @@
 import NodeCache from 'node-cache'
-import sendEmail from "../utils/sendEmail.js"
 const otpCache = new NodeCache({ stdTTL: 300 }); // 5 minutes
 export const generateOtp = () => {                            //remove the export !!!!
   const otp = Math.floor(100000 + Math.random() * 900000); // 6 digit
