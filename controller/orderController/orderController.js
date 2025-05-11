@@ -93,6 +93,7 @@ export const getUserOrders = async (req, res) => {
       res.status(500).json({ message: "Failed to update order", error });
     }
   };
+  //Delte ORDER (STRICTLY FOR ADMINS)
   export const deleteOrder = async (req, res) => {
     try {
       const order = await Order.findById(req.params.orderId);
@@ -109,4 +110,29 @@ export const getUserOrders = async (req, res) => {
       res.status(500).json({ message: "Failed to delete order", error });
     }
   };
-  
+  // USER CANCEL ORDER (soft delete)
+export const cancelOrder = async (req, res) => {
+  try {
+    const order = await Order.findOne({ _id: req.params.orderId, user: req.user._id });
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // Allow cancel only if order is not shipped or delivered
+    if (["shipped", "delivered"].includes(order.status)) {
+      return res.status(400).json({ message: "Cannot cancel this order" });
+    }
+
+    order.status = "cancelled";
+    order.cancelledAt = new Date();
+    order.cancelledByUser = true;
+
+    await order.save();
+
+    res.status(200).json({ message: "Order cancelled successfully", order });
+  } catch (error) {
+    console.error("Cancel Order Error:", error);
+    res.status(500).json({ message: "Failed to cancel order", error });
+  }
+};

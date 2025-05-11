@@ -28,6 +28,11 @@ const orderSchema = new mongoose.Schema(
       enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
       default: "pending",
     },
+    cancelledAt: Date,
+    cancelledByUser: {
+      type: Boolean,
+      default: false,
+}
   },
   {
     timestamps: true, //Created & Updated would be recorded with this  
