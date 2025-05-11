@@ -129,7 +129,3 @@ export const deleteUser = async (req, res) => {
 
 
 
-//  if (!deletedUser) {
-//             return res.status(404).json({ message: "User not found" });
-//         }
-// 				const userId = req.params; // Assuming the user ID is passed as a route parameter
