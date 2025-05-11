@@ -47,6 +47,10 @@ const userSchema = mongoose.Schema({
 		orderOtp: {
 			type: String,
 		},
+		isVerified: {
+			type: Boolean,
+			default: false,
+		},
 		orderOtpExpiry: {
 			type: Date,
 		},

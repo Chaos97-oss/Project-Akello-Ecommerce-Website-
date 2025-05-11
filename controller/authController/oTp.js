@@ -26,9 +26,9 @@ export const verifyOtp = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email });
   if (!user) return next(new AppError('User not found', 404));
 
-  console.log("Stored OTP:", user.otp);
-  console.log("Submitted OTP:", otp);
-  console.log("Expiry Time:", user.otpExpiry, "| Now:", new Date());
+  // console.log("Stored OTP:", user.otp);
+  // console.log("Submitted OTP:", otp);
+  // console.log("Expiry Time:", user.otpExpiry, "| Now:", new Date());
 
   if (
     !otp ||
@@ -40,6 +40,7 @@ export const verifyOtp = catchAsync(async (req, res, next) => {
 
   user.otp = undefined;
   user.otpExpiry = undefined;
+  user.isVerified = true; //mark as verified
   await user.save();
 
   res.status(200).json({ status: 'success', message: 'OTP verified successfully' });
