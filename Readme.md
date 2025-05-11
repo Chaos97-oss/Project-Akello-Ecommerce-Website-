@@ -1,4 +1,4 @@
-🛒 Simple E-Commerce API
+🛒 An E-Commerce API called Project Akello
 
 A RESTful API built with Node.js, Express, and MongoDB to support a simple e-commerce backend. Features include user authentication, product management, cart functionality, order creation, and admin-level controls.
 
@@ -10,13 +10,20 @@ JWT-based login and registration
 
 Role-based access control with isAdmin middleware
 
+Forgot password for user account recovery
+
+MFA with OTP implementation for login (TBD)
+
 🔐 Routes
 
-|  Method  |       Route           |           Description                       |
-|----------|-----------------------|---------------------------------------------|
-|  POST    |/api/users/signup      |Register a new user                          |
-|  POST    |/api/users/login       |User login and JWT verification              |
-|  POST    |/api/users/admin/login |**Admin only** route to create another admin |
+|  Method  |       Route              |           Description                       |
+|----------|--------------------------|---------------------------------------------|
+|  POST    |/api/auth/signup          |Register a new user                          |
+|  POST    |/api/auth/login           |User login and JWT verification              |
+|  POST    |/api/auth/admin/login     |**Admin only** route to create another admin |
+|  POST    |/api/auth/forgot-password |General route for user account recovery      |
+|  POST    |/api/auth/send-otp        |Generate OTP for login (TBD)                 |
+|  POST    |/api/auth/verify-otp      |Verify OTP for login (TBD)                   |
 
 🛍️ 2. Product Management
 
@@ -53,6 +60,8 @@ Authenticated users can place orders from their cart
 
 Admins can update or delete any order
 
+MFA implementation using OTP in order creation system 
+
 Optional: Users can cancel orders before payment (TBD)
 
 📦 Routes
@@ -63,6 +72,8 @@ Optional: Users can cancel orders before payment (TBD)
 |  GET     |/api/orders                        |Get all orders (**Admin only**)        |
 |  PUT     |/api/orders/update-status/:orderId |Update order status(**Admin only**)    |
 |  DELETE  |/api/order/:orderId                |Delete a product(**Admin only**)       |
+|  POST    |/api/order/send-otp                |Generate OTP before order creation     |
+|  POST    |/api/order/verify-otp              |Verify OTP before order                |
 
 
 🔐 Middleware
@@ -82,6 +93,14 @@ MongoDB + Mongoose
 JWT for auth
 
 Bcrypt for password hashing
+
+Nodemailer for sending OTPs & transactional emails 
+
+Node-cache for temporary in-memory storage for OTPs 
+
+Dotenv for managing enviromental variables securely 
+
+Morgan for logging requests during developments
 
 ✍️ Author
 
