@@ -38,8 +38,8 @@ Users can view all products or single product by ID
 |  GET     |/api/products         |View all products                      |
 |  GET     |/api/products/:id     |View a specific product                |
 |  POST    |/api/products/        |Create new product (**Admin only**)    |
-|  PUT     |/api/products/:id     |Update a product                       |
-|  DELETE  |/api/products/:id     |Delete a product                       |
+|  PUT     |/api/products/:id     |Update a product   (**Admin only**)    |
+|  DELETE  |/api/products/:id     |Delete a product   (**Admin only**)    |
 
 🛒 3. Cart Functionality
 
@@ -71,10 +71,10 @@ Optional: Users can cancel orders before payment (TBD)
 |  GET     |/api/orders/user/:userId           |Get orders for specific user           |
 |  GET     |/api/orders                        |Get all orders (**Admin only**)        |
 |  PUT     |/api/orders/update-status/:orderId |Update order status(**Admin only**)    |
-|  DELETE  |/api/order/:orderId                |Delete a product(**Admin only**)       |
+|  DELETE  |/api/order/:orderId                |Delete an order(**Admin only**)        |
+|  PATCH   |/api//orders/cancel/:orderId       |Cancel an order(soft delete for users) |
 |  POST    |/api/order/send-otp                |Generate OTP before order creation     |
 |  POST    |/api/order/verify-otp              |Verify OTP before order                |
-
 
 🔐 Middleware
 
