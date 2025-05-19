@@ -31,6 +31,6 @@ app.use('/api/products',productRoute);
 app.use('/api/orders', orderRoute);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is Active`);
+  console.log(`Server is Active 🚀`);
 });
 
